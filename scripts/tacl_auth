@@ -58,6 +58,7 @@ def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
     if guide:
         print_auth_help()
         return
+    password = os.environ.get('TACL_PASSWORD', password)
     if interactive:
         user_name = raw_input('User name > ')
         password = getpass.getpass('Password > ')

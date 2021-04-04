@@ -115,7 +115,7 @@ do_tacl_auth() {
     else
         TOKEN_TYPE='s3import'
     fi
-    JWT=$(tacl_auth --tsd_api_key --env $ENV --pnum $PNUM --user_name $USERNAME --password $PASSWORD --otp $OTP --token_type $TOKEN_TYPE)
+    JWT=$(TACL_PASSWORD=$PASSWORD tacl_auth --tsd_api_key --env $ENV --pnum $PNUM --user_name $USERNAME --otp $OTP --token_type $TOKEN_TYPE)
 }
 
 do_authenticated_s3cmd() {
