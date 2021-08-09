@@ -5,7 +5,7 @@ Wrapper for s3cmd, for the TSD API
 # Install
 
 ```bash
-pip3 install https://github.com/unioslo/tsd-s3cmd/archive/v0.1.0.zip
+pip3 install https://github.com/unioslo/tsd-s3cmd/archive/v0.1.1.zip
 ```
 
 # Usage
