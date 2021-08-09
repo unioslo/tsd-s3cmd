@@ -14,7 +14,7 @@ setup(
         'scripts/tacl_auth',
         'scripts/tsd-s3cmd'],
     install_requires = [
-        'tsd-api-client',
+        'tsd-api-client>=3.4.3',
         's3cmd @ https://github.com/unioslo/s3cmd/archive/v2.1.0-custom-headers.tar.gz#egg=s3cmd-2.1.0-custom-headers'
     ],
     python_requires='>=3.6',
