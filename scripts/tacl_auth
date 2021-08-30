@@ -13,6 +13,7 @@ from tsdapiclient.authapi import get_jwt_tsd_auth
 from tsdapiclient.client_config import ENV
 from tsdapiclient.tools import _check_present, user_agent
 from tsdapiclient.configurer import read_config
+from tsdapiclient.tacl import get_api_key
 
 
 requests.utils.default_user_agent = user_agent
@@ -72,20 +73,7 @@ def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
     _check_present(env, 'env')
     _check_present(pnum, 'pnum')
     try:
-        # tacl_data prefers an api_key found in .tacl_config
-        # by default there is nothing there, and tacl is
-        # able to upload data with TSD 2FA, using API keys
-        # stored in code. If .tacl_config does not contain
-        # keys, then those distributed with the application
-        # are used
-        if tsd_api_key:
-            api_key = read_config()[env][pnum]
-        else:
-            try:
-                api_key = read_config()[env]['api_key']
-            except Exception as e:
-                print('could not find an api key')
-                return
+        api_key = get_api_key(env=env, pnum=pnum)
     except Exception as e:
         print('Authentication failed')
         return
