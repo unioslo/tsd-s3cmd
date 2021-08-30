@@ -63,10 +63,10 @@ def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
         user_name = raw_input('User name > ')
         password = getpass.getpass('Password > ')
         otp = raw_input('OTP > ')
-        env = raw_input('API environment: test or prod > ')
+        env = raw_input('API environment: test, prod or alt > ')
         token_type = 'export'
         pnum = user_name.split('-')[0]
-    if env not in ['test', 'prod']:
+    if env not in ['test', 'prod', 'alt']:
         print('unknown env')
         sys.exit(1)
     _check_present(env, 'env')
