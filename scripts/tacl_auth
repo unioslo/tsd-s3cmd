@@ -9,7 +9,10 @@ import getpass
 import click
 import requests
 
-from tsdapiclient.authapi import get_jwt_tsd_auth
+try:
+    from tsdapiclient.authapi import get_jwt_two_factor_auth as tsd_auth
+except ImportError:
+    from tsdapiclient.authapi import get_jwt_tsd_auth as tsd_auth
 from tsdapiclient.client_config import ENV
 from tsdapiclient.tools import _check_present, user_agent
 from tsdapiclient.configurer import read_config
@@ -78,8 +81,7 @@ def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
         print('Authentication failed')
         return
     if user_name and password and otp and token_type:
-        jwt = get_jwt_tsd_auth(env, pnum, api_key, user_name,
-                               password, otp, token_type)
+        jwt = tsd_auth(env, pnum, api_key, user_name, password, otp, token_type)
         if update_cache and jwt:
             with open(JWT_CACHE, 'w') as f:
                 f.write(jwt)
