@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='tsd-s3cmd',
-    version='0.1.0',
+    version='0.1.2',
     description='TSD Wrapper for s3cmd',
     author='Leon du Toit, Eirik Haatveit',
     author_email='l.c.d.toit@usit.uio.no',
