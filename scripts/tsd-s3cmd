@@ -143,17 +143,16 @@ for i in ${CMD[*]}; do
 done
 
 ENV='prod'
-for i in ${CMD[*]}; do
-    if [[ $i == '--usetest' ]]; then
+case $1 in
+    --usetest)
         ENV='test'
-        el=("--usetest")
-        ARGS=("${CMD[@]/$el}")
-    elif [[ $i == '--usealt' ]]; then
+        shift
+        ;;
+    --usealt)
         ENV='alt'
-        el=("--usealt")
-        ARGS=("${CMD[@]/$el}")
-    fi
-done
+        shift
+        ;;
+esac
 
 if [[ $# -lt 1 ]]; then
     s3cmd
