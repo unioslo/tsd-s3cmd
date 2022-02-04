@@ -2,18 +2,22 @@
 
 Wrapper for s3cmd, for the TSD API
 
-# Install
+## Installation
+
+Navigate to <https://github.com/unioslo/tsd-s3cmd/releases/latest>, copy the
+link to either one of the *Source code* archives listed under *Assets* there,
+and run the following command:
 
 ```bash
-pip3 install https://github.com/unioslo/tsd-s3cmd/archive/v0.1.1.zip
+pip3 install <source code URL you copied above>
 ```
 
-# Usage
+## Usage
 
 To use the TSD s3 API, use `tsd-s3cmd`:
 
 ```bash
-tacl --register
+tsd-s3cmd --register
 tsd-s3cmd --guide
 tsd-s3cmd --help
 ```
