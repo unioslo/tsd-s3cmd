@@ -113,6 +113,9 @@ def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
         jwt = tsd_auth(env, pnum, api_key, user_name, password, otp, token_type)
         if isinstance(jwt, tuple):
             jwt = jwt[0]
+        if jwt is None:
+            print('did not receive a JWT token on auth attempt')
+            sys.exit(1)
         if update_cache and jwt:
             with open(JWT_CACHE, 'w') as f:
                 f.write(jwt)
