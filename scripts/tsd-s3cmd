@@ -114,6 +114,12 @@ do_tacl_auth() {
         TOKEN_TYPE='s3import'
     fi
     JWT=$(TACL_PASSWORD=$PASSWORD tacl_auth --tsd_api_key --env $ENV --pnum $PNUM --user_name $USERNAME --otp $OTP --token_type $TOKEN_TYPE)
+    
+    auth_return_code=$?
+    if [ $auth_return_code -ne 0 ]; then
+        echo "Authentication failed, please verify your credentials."
+        exit 1
+    fi
 }
 
 do_authenticated_s3cmd() {
