@@ -2,9 +2,11 @@
 
 """Script to perform 2FA and get a JWT in return."""
 
-import os
-import sys
 import getpass
+import os
+import platform
+import sys
+import textwrap
 
 import click
 import requests
@@ -18,6 +20,10 @@ from tsdapiclient.tools import _check_present, user_agent
 from tsdapiclient.configurer import read_config
 from tsdapiclient.tacl import get_api_key
 
+IS_PYTHON38_OR_NEWER = sys.version_info.major == 3 and sys.version_info.minor >= 8
+
+if IS_PYTHON38_OR_NEWER:
+    import importlib.metadata
 
 requests.utils.default_user_agent = user_agent
 
@@ -45,6 +51,25 @@ def print_auth_help():
     """
     print(_help)
 
+def print_version_info() -> None:
+    if IS_PYTHON38_OR_NEWER:
+        version = "v"+importlib.metadata.version('tsd-s3cmd')
+    else:
+        version = "version unknown"
+
+    version_text = """\
+        tsd-s3cmd {version}
+        - OS/Arch: {os}/{arch}
+        - Python: {pyver}\
+    """.format(
+        version=version,
+        os=platform.system(),
+        arch=platform.uname().machine,
+        pyver=platform.python_version()
+    )
+    print(textwrap.dedent(version_text))
+
+
 
 @click.command()
 @click.option('--interactive', is_flag=True, default=False, help='runs the authentication flow interactively')
@@ -55,13 +80,17 @@ def print_auth_help():
 @click.option('--otp', default=None, help='one time passcode')
 @click.option('--token_type', default=None, help='import, export, or admin')
 @click.option('--guide', is_flag=True, default=False, help='print help text')
+@click.option('--version', is_flag=True, default=False, help='print tsd-s3cmd version')
 @click.option('--update_cache', is_flag=True, default=False, help='use token cache')
 @click.option('--tsd_api_key', is_flag=True, default=False, help='use project specific TSD api key')
 def main(interactive, env, pnum, user_name, password, otp, token_type, guide,
-         update_cache, tsd_api_key):
+         version, update_cache, tsd_api_key):
     if guide:
         print_auth_help()
-        return
+        sys.exit(0)
+    if version:
+        print_version_info()
+        sys.exit(0)
     password = os.environ.get('TACL_PASSWORD', password)
     if interactive:
         user_name = raw_input('User name > ')

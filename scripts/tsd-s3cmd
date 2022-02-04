@@ -164,6 +164,10 @@ case $1 in
     printf "%s\n" "$_guide"
     exit 0
     ;;
+    '--version')
+    tacl_auth --version
+    exit 0
+    ;;
     '--register')
     tacl --register
     exit 0
