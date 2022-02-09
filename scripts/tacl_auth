@@ -20,10 +20,10 @@ from tsdapiclient.tools import _check_present, user_agent
 from tsdapiclient.configurer import read_config
 from tsdapiclient.tacl import get_api_key
 
-IS_PYTHON38_OR_NEWER = sys.version_info.major == 3 and sys.version_info.minor >= 8
-
-if IS_PYTHON38_OR_NEWER:
-    import importlib.metadata
+try:
+    import importlib.metadata as importlib_metadata
+except ModuleNotFoundError:
+    import importlib_metadata
 
 requests.utils.default_user_agent = user_agent
 
@@ -52,17 +52,12 @@ def print_auth_help():
     print(_help)
 
 def print_version_info() -> None:
-    if IS_PYTHON38_OR_NEWER:
-        version = "v"+importlib.metadata.version('tsd-s3cmd')
-    else:
-        version = "version unknown"
-
     version_text = """\
-        tsd-s3cmd {version}
+        tsd-s3cmd v{version}
         - OS/Arch: {os}/{arch}
         - Python: {pyver}\
     """.format(
-        version=version,
+        version=importlib_metadata.version('tsd-s3cmd'),
         os=platform.system(),
         arch=platform.uname().machine,
         pyver=platform.python_version()
